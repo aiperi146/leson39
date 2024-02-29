@@ -27,3 +27,15 @@ input {
     padding: 10px;
     border: 1px solid #ccc;
 }
+.error {
+    color: red;
+    display: none;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}

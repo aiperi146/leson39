@@ -46,5 +46,25 @@
             <p>Hello, <span id="fullname-value"></span>! We will contact you at <span id="email-value"></span>.</p>
         </div>
     </div>
+    <form id="registrationForm">
+        <div>
+            <label for="fullName">ФИО:</label>
+            <input type="text" id="fullName" name="fullName">
+            <div id="fullNameError" class="error"></div>
+        </div>
+        <div>
+            <label for="contact">Контакт:</label>
+            <input type="text" id="contact" name="contact">
+            <div id="contactError" class="error"></div>
+        </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password">
+            <div id="passwordError" class="error"></div>
+        </div>
+        <button type="submit">Отправить</button>
+    </form>
+    <div id="successMessage" style="display: none;"></div>
+
 </body>
 </html>

@@ -248,4 +248,87 @@ function displaySuccessMessage(fullname, email) {
 function clearForm() {
     form.reset();
 }
+// 10. Подсветка ошибочного поля и сообщение о требованиях к его значению должна исчезать после того как ошибка в его заполнении будет исправлена
+const form1 = document.getElementById('registrationForm');
+const fullNameInput = document.getElementById('fullName');
+const contactInput = document.getElementById('contact');
+const passwordInput = document.getElementById('password');
+const successMessage1 = document.getElementById('successMessage');
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    if (validateForm()) {
+        showSuccessMessage();
+    }
+});
+
+function validateForm() {
+    let isValid = true;
+
+    const fullName = fullNameInput.value.trim();
+    const contact = contactInput.value.trim();
+    const password = passwordInput.value.trim();
+
+
+    if (!isValidFullName(fullName)) {
+        showError(fullNameInput, 'ФИО должно содержать как минимум два слова из русских или английских букв, с обязательным пробелом между ними');
+        isValid = false;
+    } else {
+        hideError(fullNameInput);
+    }
+
+
+    if (!isValidContact(contact)) {
+        showError(contactInput, 'Контакт должен соответствовать маске для email');
+        isValid = false;
+    } else {
+        hideError(contactInput);
+    }
+
+
+    if (!isValidPassword(password)) {
+        showError(passwordInput, 'Пароль должен содержать не менее 8 символов, как минимум по одной заглавной и строчной латинской букве, цифре и символу из набора !@#$%^&*()_+-=');
+        isValid = false;
+    } else {
+        hideError(passwordInput);
+    }
+
+    return isValid;
+}
+
+function isValidFullName(fullName) {
+    return /^[a-zA-Zа-яА-Я]+\s[a-zA-Zа-яА-Я]+$/.test(fullName);
+}
+
+function isValidContact(contact) {
+    return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(contact);
+}
+
+function isValidPassword(password) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=])[A-Za-z\d!@#$%^&*()_+\-=]{8,}$/.test(password);
+}
+
+function showError(input, errorMessage) {
+    const errorDiv = input.nextElementSibling;
+    errorDiv.textContent = errorMessage;
+    errorDiv.style.display = 'block';
+    input.classList.add('error');
+}
+
+function hideError(input) {
+    const errorDiv = input.nextElementSibling;
+    errorDiv.textContent = '';
+    errorDiv.style.display = 'none';
+    input.classList.remove('error');
+}
+
+function showSuccessMessage() {
+    successMessage.textContent = `Здравствуйте, ${fullNameInput.value}! Мы свяжемся с вами по email: ${contactInput.value}`;
+    successMessage.style.display = 'block';
+    form.reset();
+    setTimeout(function() {
+        successMessage.style.display = 'none';
+    }, 5000);
+}
 
