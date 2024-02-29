@@ -178,3 +178,74 @@ function validateForm() {
     return isValid;
 }
 
+// 9. В случае если те или иные поля заполнены неверно, их необходимо подсветить (например, красной рамкой), и оставить форму отображённой и заполненной, также рядом с полем отображается краткое сообщение о требованиях к его значению
+const form = document.getElementById('registration-form');
+const successMessage = document.getElementById('success-message');
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const fullname = document.getElementById('fullname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!validateFullname(fullname)) {
+        displayErrorMessage('fullname', 'Full name must contain at least two words separated by space.');
+    } else {
+        clearErrorMessage('fullname');
+    }
+
+    if (!validateEmail(email)) {
+        displayErrorMessage('email', 'Invalid email format.');
+    } else {
+        clearErrorMessage('email');
+    }
+
+    if (!validatePassword(password)) {
+        displayErrorMessage('password', 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.');
+    } else {
+        clearErrorMessage('password');
+    }
+
+    if (validateFullname(fullname) && validateEmail(email) && validatePassword(password)) {
+        displaySuccessMessage(fullname, email);
+        clearForm();
+    } else {
+        successMessage.style.display = 'none';
+    }
+});
+
+function validateFullname(fullname) {
+    return fullname.split(' ').length >= 2;
+}
+
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+function validatePassword(password) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=])[A-Za-z\d!@#$%^&*()_+\-=]{8,}$/;
+    return regex.test(password);
+}
+
+function displayErrorMessage(field, message) {
+    const errorMessage = document.getElementById(`${field}-error`);
+    errorMessage.textContent = message;
+}
+
+function clearErrorMessage(field) {
+    const errorMessage = document.getElementById(`${field}-error`);
+    errorMessage.textContent = '';
+}
+
+function displaySuccessMessage(fullname, email) {
+    document.getElementById('fullname-value').textContent = fullname;
+    document.getElementById('email-value').textContent = email;
+    successMessage.style.display = 'block';
+}
+
+function clearForm() {
+    form.reset();
+}
+
