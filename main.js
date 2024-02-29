@@ -364,4 +364,6 @@ function showSuccessMessage() {
         successMessage.style.display = 'none';
     }, 5000);
 }
+// Также можно получить ещё 10 + 10 баллов
+// 1. Если использовать input с атрибутом pattern
 

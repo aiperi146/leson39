@@ -65,6 +65,15 @@
         <button type="submit">Отправить</button>
     </form>
     <div id="successMessage" style="display: none;"></div>
+    <form id="registrationForm">
+
+        <div>
+            <label for="contact">Контакт:</label>
+            <input type="text" id="contact" name="contact" pattern="(?:\+996|0)(?:\s|-)?[0-9]{3}(?:\s|-)?[0-9]{2}(?:\s|-)?[0-9]{2}" title="Введите телефон в формате +996 111 22-33-44 или email">
+            <div id="contactError" class="error"></div>
+        </div>
+
+    </form>
 
 </body>
 </html>
