@@ -43,3 +43,38 @@ function validateForm() {
 
       return isValid;
 
+/* 6. Контакт в базовой версии задания должен соответствовать маске для email. Для простоты будем считать, что:
+до @ у нас возможны только латинские буквы, цифры и точки (не менее 1)
+разумеется, обязательно имеется @
+после @ - латинские буквы, цифры, дефисы и точки (не менее 1 символа)
+заканчиваться должно обязательно на точку и две или более латинские буквы*/
+
+function validateForm() {
+    var isValid = true;
+
+    fieldRequirements.forEach(function (requirement, field) {
+        if (field.id === 'fullName') {
+
+            var fullName = field.value.trim();
+            if (!/^[а-яА-Яa-zA-Z]+\s[а-яА-Яa-zA-Z]+$/.test(fullName)) {
+                alert('Поле ФИО должно содержать как минимум два слова из русских или английских букв, с обязательным пробелом между ними.');
+                isValid = false;
+            }
+        } else if (field.id === 'contact') {
+
+            var contact = field.value.trim();
+            if (!/^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(contact)) {
+                alert('Поле Контакт должно быть в формате email.');
+                isValid = false;
+            }
+        } else {
+
+            if (!field.value) {
+                alert(requirement);
+                isValid = false;
+            }
+        }
+    });
+
+    return isValid;
+}
