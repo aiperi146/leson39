@@ -366,4 +366,50 @@ function showSuccessMessage() {
 }
 // Также можно получить ещё 10 + 10 баллов
 // 1. Если использовать input с атрибутом pattern
+// 2. Если использовать FormData
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+
+    let formData = new FormData(this);
+    let contactValue = formData.get("contact");
+
+
+    if (validateEmail(contactValue)) {
+
+        showMessage("success", "Здравствуйте, " + formData.get("fio") + "! Мы свяжемся с вами по email: " + contactValue);
+    } else if (validatePhone(contactValue)) {
+
+        showMessage("success", "Здравствуйте, " + formData.get("fio") + "! Мы свяжемся с вами по телефону: " + formatPhone(contactValue));
+    } else {
+
+        document.getElementById("contact").classList.add("error");
+        document.getElementById("contactError").textContent = "Неверный формат контакта";
+    }
+});
+
+function validateEmail(email) {
+
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
+
+function validatePhone(phone) {
+
+    let phonePattern = /^(?:\+996|0)(?:\s|-)?[0-9]{3}(?:\s|-)?[0-9]{2}(?:\s|-)?[0-9]{2}$/;
+    return phonePattern.test(phone);
+}
+
+function formatPhone(phone) {
+
+    return phone.replace(/(\d{3})(\d{2})(\d{2})/, "+996 $1 $2-$3");
+}
+
+function showMessage(type, message) {
+
+    let messageDiv = document.createElement("div");
+    messageDiv.classList.add(type);
+    messageDiv.textContent = message;
+    document.body.appendChild(messageDiv);
+}
 
