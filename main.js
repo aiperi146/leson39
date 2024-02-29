@@ -78,3 +78,46 @@ function validateForm() {
 
     return isValid;
 }
+/* 7. Пароль должен не короче 8 символов и должен обязательно включать как минимум по одной:
+заглавную латинскую букву
+строчную латинскую букву
+цифру
+символ из набора !@#$%^&*()_+-= */
+
+function validateForm() {
+    var isValid = true;
+
+
+    fieldRequirements.forEach(function (requirement, field) {
+        if (field.id === 'fullName') {
+
+            var fullName = field.value.trim();
+            if (!/^[а-яА-Яa-zA-Z]+\s[а-яА-Яa-zA-Z]+$/.test(fullName)) {
+                alert('Поле ФИО должно содержать как минимум два слова из русских или английских букв, с обязательным пробелом между ними.');
+                isValid = false;
+            }
+        } else if (field.id === 'contact') {
+
+            var contact = field.value.trim();
+            if (!/^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(contact)) {
+                alert('Поле Контакт должно быть в формате email.');
+                isValid = false;
+            }
+        } else if (field.id === 'password') {
+
+            var password = field.value.trim();
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=])[A-Za-z\d!@#$%^&*()_+\-=]{8,}/.test(password)) {
+                alert('Пароль должен содержать не менее 8 символов, включая по одной заглавной и строчной латинской букве, цифре и символу из набора !@#$%^&*()_+-=');
+                isValid = false;
+            }
+        } else {
+            if (!field.value) {
+                alert(requirement);
+                isValid = false;
+            }
+        }
+    });
+
+    return isValid;
+}
+
