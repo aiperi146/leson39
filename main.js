@@ -121,3 +121,60 @@ function validateForm() {
     return isValid;
 }
 
+/* 8. В случае если все поля заполнены верно, очищаем инпуты и скрываем форму, отображая примерно такую надпись (стилизация на ваше усмотрение):
+Здравствуйте, (сюда подставить ФИО)!
+Мы свяжемся с вами по email: (сюда подставить контакт) */
+
+function validateForm() {
+    var isValid = true;
+
+
+    fieldRequirements.forEach(function (requirement, field) {
+        if (field.id === 'fullName') {
+
+            var fullName = field.value.trim();
+            if (!/^[а-яА-Яa-zA-Z]+\s[а-яА-Яa-zA-Z]+$/.test(fullName)) {
+                alert('Поле ФИО должно содержать как минимум два слова из русских или английских букв, с обязательным пробелом между ними.');
+                isValid = false;
+            }
+        } else if (field.id === 'contact') {
+
+            var contact = field.value.trim();
+            if (!/^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(contact)) {
+                alert('Поле Контакт должно быть в формате email.');
+                isValid = false;
+            }
+        } else if (field.id === 'password') {
+
+            var password = field.value;
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=])[A-Za-z\d!@#$%^&*()_+\-=]{8,}/.test(password)) {
+                alert('Пароль должен содержать не менее 8 символов и включать как минимум по одной заглавной и строчной латинской букве, цифре и символу из набора !@#$%^&*()_+-=');
+                isValid = false;
+            }
+        } else {
+
+            if (!field.value) {
+                alert(requirement);
+                isValid = false;
+            }
+        }
+    });
+
+    if (isValid) {
+
+        var fullName = document.getElementById('fullName').value.trim();
+        var contact = document.getElementById('contact').value.trim();
+        var welcomeMessage = document.createElement('div');
+        welcomeMessage.textContent = 'Здравствуйте, ' + fullName + '! Мы свяжемся с вами по email: ' + contact;
+        document.body.appendChild(welcomeMessage);
+
+
+        document.getElementById('fullName').value = '';
+        document.getElementById('contact').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('registrationForm').style.display = 'none';
+    }
+
+    return isValid;
+}
+
