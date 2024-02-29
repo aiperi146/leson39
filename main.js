@@ -331,4 +331,37 @@ function showSuccessMessage() {
         successMessage.style.display = 'none';
     }, 5000);
 }
+/*Дополнительное задание на 30 баллов
+В поле контакта можно ввести не только емейл, но и телефон. Телефон может начинаться с +996 или 0, и дальше содержать цифры (строго 6), а также любое количество пробелов и дефисов.
+
+Если человек ввёл email, то всё отображается так же, как и в базовой версии задания.
+
+Если человек ввёл телефон, отображаемая при успешном заполнении формы надпись должна выглядеть примерно так:
+
+Здравствуйте, (сюда подставить ФИО)!
+Мы свяжемся с вами по телефону: (сюда подставить телефон в строгом формате, см. ниже)
+Телефон должен отображаться строго в формате вида +996 111 22-33-44, даже если его ввели в другом формате.*/
+function showSuccessMessage() {
+    let contactType;
+    let contactValue;
+
+    if (isValidContact(contactInput.value.trim())) {
+
+        contactType = 'по email';
+        contactValue = contactInput.value.trim();
+    } else {
+        contactType = 'по телефону';
+        contactValue = contactInput.value.trim().replace(/^(\+996|0)?(\d{3})(\d{2})(\d{2})(\d{2})$/, '+996 $2 $3-$4-$5');
+    }
+
+    successMessage.innerHTML = `
+        <p>Здравствуйте, ${fullNameInput.value}!</p>
+        <p>Мы свяжемся с вами ${contactType}: ${contactValue}</p>
+    `;
+    successMessage.style.display = 'block';
+    form.reset();
+    setTimeout(function() {
+        successMessage.style.display = 'none';
+    }, 5000);
+}
 
