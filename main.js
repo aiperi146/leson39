@@ -32,3 +32,14 @@ function validateForm() {
 
       return isValid;
   }
+// 5. ФИО должно содержать как минимум два слова из русских или английских букв, с обязательным пробелом между ними
+      var fullNameField = document.getElementById('fullName');
+      var fullNameValue = fullNameField.value.trim();
+      var fullNameRegex = /^[a-zA-Zа-яА-Я]+\s+[a-zA-Zа-яА-Я]+$/;
+      if (!fullNameRegex.test(fullNameValue)) {
+          alert('ФИО должно содержать как минимум два слова из русских или английских букв, с обязательным пробелом между ними.');
+          isValid = false;
+      }
+
+      return isValid;
+
